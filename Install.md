@@ -132,8 +132,13 @@ Now lets set up a bootloader , to do so , we'll use the arch package handler pac
 `grub-mkconfig -o /boot/grub/grub.cfg` - configures grub for use
 
 > Configuring grub to detect windows 
-`pacman -S ntfs-3g os-prober`  then edit /etc/default/grub and add/uncomment: "GRUB_DISABLE_OS_PROBER=false"
 
-```mkdir /mnt/boot/windows
-mount /dev/windows_partition /mnt/boot/windows 
-grub-mkconfig -o /boot/grub/grub.cfg```
+`pacman -S ntfs-3g os-prober`  
+
+then edit /etc/default/grub and add/uncomment: "GRUB_DISABLE_OS_PROBER=false"
+
+`mkdir /mnt/boot/windows`
+
+`mount /dev/windows_partition /mnt/boot/windows `
+
+`grub-mkconfig -o /boot/grub/grub.cfg`
