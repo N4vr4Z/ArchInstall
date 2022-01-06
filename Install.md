@@ -42,9 +42,7 @@ You will be greeted by a terminal ( you'll be logged in as root )
 
 Ctrl+C / exit to leave iwd prompt 
 
-- **Mobile broadband modem** — connect to the mobile network with the [mmcli](https://wiki.archlinux.org/title/Mobile_broadband_modem#ModemManager) utility.
-
-`Ping google.com` to check if your internet connection is working 
+Use command `Ping google.com` to check if your internet connection is working 
 
 
 
@@ -103,9 +101,11 @@ If you use ethernet :
 
 If you use wifi :
 
+When using iwctl , I prefer to use dhcpcd instead of NetworkManager . 
+
 `pacstrap /mnt linux linux-firmware base base-devel vim dhcpcd iwctl `
 
-When using iwctl , I prefer to use dhcpcd instead of NetworkManager .
+> NOTE : You may also need to install ntfs-3g , so that you can read windows partitions . This will be necessary in case of dual booting windows 
 
 Now generate an fstab using :
 
