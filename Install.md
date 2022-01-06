@@ -1,12 +1,18 @@
 # ARCH INSTALLATION GUIDE
 
+
+
 ## DOWNLOADING ISO AND MAKING A LIVE-USB
 
 Download [Arch Linux ISO](https://archlinux.org/download/) and use it to create a live-USB using rufus (windows), woeUSB (linux) , balenaetcher .
 
+
+
 ## INSTALLING ISO FROM LIVE-USB 
 
 > Note: Set Boot priority to USB in BIOS settings beforehand 
+
+
 
 ###### STEP 1 : BOOTLOADER
 
@@ -14,13 +20,15 @@ After you are greated with Arch linux boot loader , Select **Boot Arch Linux (x8
 
 You will be greated by a terminal ( you'll be logged in as root )
 
+
+
 ###### STEP2 : CONFIGURING INTERNET CONNECTION 
 
 - **Ethernet** — plug in the cable.
 
 - **Wi-Fi** — authenticate to the wireless network using [iwctl](https://wiki.archlinux.org/title/Iwctl) .
 
-**IWCTL** -
+**IWCTL** Quick guide  -
 
 `iwctl`- starts iwd interactive prompt 
 
@@ -37,6 +45,8 @@ Ctrl+C / exit to leave iwd prompt
 - **Mobile broadband modem** — connect to the mobile network with the [mmcli](https://wiki.archlinux.org/title/Mobile_broadband_modem#ModemManager) utility.
 
 `Ping google.com` to check if your internet connection is working 
+
+
 
 ###### STEP3 : PARTITIONING DRIVERS 
 Before proceding to partitioning drives , Lets set correct time to avoid any possible netwoks errors using command `timedatectl set-ntp true`
@@ -60,8 +70,10 @@ Create another partitions according to your will . Now quit the partition utilit
 `mkfs.ext4 /dev/boot_partition` - formats our boot partition which will be assigned to boot loader
 
 `mkfs.ext4 /dev/root_partition` - formats the partition which will be assigned to / 
-
-After creating partitions sucessfully you can cross-check them using `lsblk` . Now we will mount the partitions we just created . 
+ 
+ Swap is like a virtual-RAM that system can use when required . My advice will be to skip a swap partition if you are using a HDD . Slow writing speed of HDD will barely help to improve performance . If you wanna make a swap partition anyways , you can do so by making a partition with partition type "Linux SWAP" . Now initialise the swap partition using `mkswap /dev/swap_partition`
+ 
+ Now we will mount the partitions we just created . 
 
 `mount /dev/root_partition /mnt` - mounts root partition to /mnt 
 
@@ -69,12 +81,21 @@ After creating partitions sucessfully you can cross-check them using `lsblk` . N
 
 `mount /dev/boot_partition /mnt/boot` - mounts boot partition to /mnt/boot . This is the directory where the boot loader will be installed 
 
+If you made a SWAP partition , you'll also have to mount the swap partition using `swapon /dev/swap_partition`
+
+After creating partitions sucessfully you can cross-check them using `lsblk` .
+
+
+
 ###### STEP4 : INSTALLING SYSTEM FILES 
 
 If you use ethernet :
 
-pacstrap linux linux-firmware base base-devel vim NetworkManager 
+`pacstrap linux linux-firmware base base-devel vim NetworkManager `
 
 If you use wifi :
 
-pacstrap linux linux-firmware base base-devel vim dhcpcd iwctl 
+`pacstrap linux linux-firmware base base-devel vim dhcpcd iwctl `
+
+When using iwctl , I prefer to use dhcpcd instead of NetworkManager .
+
