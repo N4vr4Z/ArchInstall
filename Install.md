@@ -10,7 +10,7 @@ Download [Arch Linux ISO](https://archlinux.org/download/) and use it to create 
 
 ###### STEP 1 : BOOTLOADER
 
-After you are greated with Arch linux boot loader , Select **Boot Arch Linux (x86_64)
+After you are greated with Arch linux boot loader , Select **Boot Arch Linux (x86_64)**
 
 You will be greated by a terminal ( you'll be logged in as root )
 
@@ -37,3 +37,44 @@ Ctrl+C / exit to leave iwd prompt
 - **Mobile broadband modem** — connect to the mobile network with the [mmcli](https://wiki.archlinux.org/title/Mobile_broadband_modem#ModemManager) utility.
 
 `Ping google.com` to check if your internet connection is working 
+
+###### STEP3 : PARTITIONING DRIVERS 
+Before proceding to partitioning drives , Lets set correct time to avoid any possible netwoks errors using command `timedatectl set-ntp true`
+
+Now we'll continue to partition our drives
+
+Lets list our current storage devices using the command `lsblk`
+
+Now , to start partitioning run `cfdisk /dev/device_to_create_partition_on`
+
+We'll be greated by four options , choose the correct option according to your computer :
+
+**gpt** : If you have a relatively newer computer and have a storage device with storage capacity >2 TB , use this option 
+
+**dos** : If you have a old computer / storage device with storage capacity <2 TB , use this option 
+
+Create a 512 MB ( 128 MB will work for GRUB , using 512 MB to ensure any bloated boot loader will run too ) bootable partition . Partition can be made bootable by pressing B on the partition . 
+
+Create another partitions according to your will . Now quit the partition utility and format the partitions we just made using :
+
+`mkfs.ext4 /dev/boot_partition` - formats our boot partition which will be assigned to boot loader
+
+`mkfs.ext4 /dev/root_partition` - formats the partition which will be assigned to / 
+
+After creating partitions sucessfully you can cross-check them using `lsblk` . Now we will mount the partitions we just created . 
+
+`mount /dev/root_partition /mnt` - mounts root partition to /mnt 
+
+`mkdir /mnt/boot` - makes a directory called boot in /mnt 
+
+`mount /dev/boot_partition /mnt/boot` - mounts boot partition to /mnt/boot . This is the directory where the boot loader will be installed 
+
+###### STEP4 : INSTALLING SYSTEM FILES 
+
+If you use ethernet :
+
+pacstrap linux linux-firmware base base-devel vim NetworkManager 
+
+If you use wifi :
+
+pacstrap linux linux-firmware base base-devel vim dhcpcd iwctl 
