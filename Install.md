@@ -111,9 +111,9 @@ Now generate an fstab using :
 
 `genfstab -U /mnt >> /mnt/etc/fstab`
 
-###### STEP4: SETTING UP INSTALLED DISTRO
+###### STEP4: FINISHING THE INSTALLATION
 
-`arch-chroot /mnt` - this will load the distro we just installed . Now we are no longer in Live-USB environment .
+`arch-chroot /mnt` - this will chroot us into the distro we just installed .
 
 During previous step , if you installed networkmanager , use:
 
@@ -142,3 +142,15 @@ then edit /etc/default/grub and add/uncomment: "GRUB_DISABLE_OS_PROBER=false"
 `mount /dev/windows_partition /mnt/boot/windows `
 
 `grub-mkconfig -o /boot/grub/grub.cfg`
+
+###### STEP5: SETTING UP THE INSTALLED DISTRO 
+
+`passwd` - to set up  a password
+
+`vim /etc/locale.gen` - select the language you want to use by uncommenting it . ( for example , en_US UTF and en_US ISO )
+
+`locale-gen` - generate the locale you uncommented during previous command 
+
+`vim /etc/locale.conf` and write LANG=en_US.UTF-8
+
+`vim /etc/hostname`
