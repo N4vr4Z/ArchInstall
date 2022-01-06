@@ -97,16 +97,43 @@ After creating partitions sucessfully you can cross-check them using `lsblk` .
 
 If you use ethernet :
 
-`pacstrap /mnt linux linux-firmware base base-devel vim NetworkManager `
+`pacstrap /mnt linux linux-firmware base base-devel vim networkmanager `
 
 If you use wifi :
 
 When using iwctl , I prefer to use dhcpcd instead of NetworkManager . 
 
-`pacstrap /mnt linux linux-firmware base base-devel vim dhcpcd iwctl `
+`pacstrap /mnt linux linux-firmware base base-devel vim iwctl dhcpcd `
 
 > NOTE : You may also need to install ntfs-3g , so that you can read windows partitions . This will be necessary in case of dual booting windows 
 
 Now generate an fstab using :
 
 `genfstab -U /mnt >> /mnt/etc/fstab`
+
+###### STEP4: SETTING UP INSTALLED DISTRO
+
+`arch-chroot /mnt` - this will load the distro we just installed . Now we are no longer in Live-USB environment .
+
+During previous step , if you installed networkmanager , use:
+
+`systemctl enable NetworkManager` - enables network manager 
+
+if you installed dhcpcd , use :
+
+`systemctl enable dhcpcd`
+
+Now lets set up a bootloader , to do so , we'll use the arch package handler pacman . 
+
+`pacman -S grub `
+
+`grub-install /dev/device_to_which_you_installed_arch ` - installs grub 
+
+`grub-mkconfig -o /boot/grub/grub.cfg` - configures grub for use
+
+> Configuring grub to detect windows 
+`pacman -S ntfs-3g os-prober`  then edit /etc/default/grub and add/uncomment: "GRUB_DISABLE_OS_PROBER=false"
+
+```mkdir /mnt/boot/windows
+mount /dev/windows_partition /mnt/boot/windows 
+grub-mkconfig -o /boot/grub/grub.cfg```
