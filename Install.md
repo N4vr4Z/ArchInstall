@@ -153,4 +153,16 @@ then edit /etc/default/grub and add/uncomment: "GRUB_DISABLE_OS_PROBER=false"
 
 `vim /etc/locale.conf` and write LANG=en_US.UTF-8
 
-`vim /etc/hostname`
+`vim /etc/hostname` - set your hostname ( the name which is used in shell )
+
+`ln -sf /usr/share/zoneinfo/use_tab_key /etc/localtime ` - set the timezone , your computer will use 
+
+everything is finished , lets reboot 
+
+`exit`
+
+`umount -R /mnt`
+
+ `reboot`
+ 
+ INSTALLATION FINISHED :)
