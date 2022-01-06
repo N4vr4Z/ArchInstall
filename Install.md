@@ -21,11 +21,17 @@ You will be greated by a terminal ( you'll be logged in as root )
 - **Wi-Fi** — authenticate to the wireless network using [iwctl](https://wiki.archlinux.org/title/Iwctl) .
 
 **IWCTL** -
+
 `iwctl`- starts iwd interactive prompt 
+
 `[iwd]# device list ` - lists all network devices
+
 `[iwd]# station *device* scan` - replace device with your networking device ( for example wlan0)
+
 `[iwd]# station *device* get-networks` - shows all visible wifi networks 
+
 `[iwd]# station *device* connect *SSID* ` - If network is password protected it will ask for a passphrase 
+
 Ctrl+C / exit to leave iwd prompt 
 
 - **Mobile broadband modem** — connect to the mobile network with the [mmcli](https://wiki.archlinux.org/title/Mobile_broadband_modem#ModemManager) utility.
